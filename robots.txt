@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stickershop-gauravagl.web.app/sitemap.xml

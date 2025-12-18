@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /orders/{document=**} {
+      // Allow anyone to read a SPECIFIC order (for tracking) if they know the ID
+      // But NOT list all orders (prevents scraping)
+      allow get: if true;
+      allow list: if request.auth != null;
+      
+      // Allow creation
+      allow create: if true;
+      
+      // ONLY logged-in users (Admin) can update status or delete
+      allow update, delete: if request.auth != null;
+    }
+    
+    match /products/{document=**} {
+      // Anyone can see products (Shop)
+      allow read: if true;
+      
+      // Only Admin can add/edit/delete products
+      allow write: if request.auth != null;
+    }
+  }
+}
